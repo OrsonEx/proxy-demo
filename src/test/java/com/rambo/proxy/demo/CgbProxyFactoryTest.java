@@ -1,5 +1,7 @@
 package com.rambo.proxy.demo;
 
+import cn.hutool.aop.aspects.TimeIntervalAspect;
+import cn.hutool.aop.proxy.ProxyFactory;
 import com.rambo.proxy.demo.impl.UserServiceImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -27,8 +29,15 @@ public class CgbProxyFactoryTest {
      */
     @Test
     public void testGetProxyInstance() throws Exception {
-        UserService proxyInstance = (UserService) new CgbProxyFactory(new UserServiceImpl()).getProxyInstance();
-        proxyInstance.login("user1","111111");
+     /*   UserService proxyInstance = (UserService) new CgbProxyFactory(new UserServiceImpl()).getProxyInstance();
+        proxyInstance.login("user1","111111");*/
+
+        UserServiceImpl service = ProxyFactory.createProxy(new UserServiceImpl(), TimeIntervalAspect.class);
+        service.login("user1","111111");
+
+       /* UserServiceImpl userService = ProxyUtil.proxy(new UserServiceImpl(), TimeIntervalAspect.class);
+        userService.login("user1","111111");*/
+
     }
 
     /**

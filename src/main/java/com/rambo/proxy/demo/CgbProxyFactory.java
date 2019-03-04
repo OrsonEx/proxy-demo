@@ -21,6 +21,11 @@ public class CgbProxyFactory implements MethodInterceptor {
     }
 
     public Object getProxyInstance() {
+        /*
+          Enhancer类为Cglib库中的字节码增强器，它可以方便对你想要处理的类进行扩展;
+          将被代理类 target 设置成父类，然后设置当前 intercept 为代理拦截器;
+          最后执行 enhancer.create() 动态生成一个代理类。
+         */
         Enhancer en = new Enhancer();
         en.setSuperclass(target.getClass());
         en.setCallback(this);
